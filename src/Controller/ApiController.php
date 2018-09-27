@@ -6,8 +6,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Service\RedisService;
+use Ramsey\Uuid\Uuid;
+
 
 class ApiController extends Controller{
+
+  private $redis = null;
+
+  public function __construct(RedisService $redisService){
+    $this->redis = $redisService->getClient();
+  }
 
   /**
    * @Route("/", name="home")
@@ -19,13 +28,10 @@ class ApiController extends Controller{
   }
 
   /**
-   * @Route("/bol/{id}", name="bol", methods={"GET"})
+   * @Route("/bol/{uuid}", name="bol", methods={"GET"})
    **/
-  public function bol(Request $request, $id):Response{
-    $bol = [
-      "id" => "123456-12345678-34567",
-      "items" => []
-    ];
+  public function bol(Request $request, $uuid):Response{
+    $bol = $this->redis->set($uuid);
     return $this->json($bol, 200);
   }
 
@@ -33,10 +39,13 @@ class ApiController extends Controller{
    * @Route("/bol", name="bol_create", methods={"POST"})
    **/
   public function create(Request $request):Response{
+    $uuid4 = Uuid::uuid4()->toString();
     $bol = [
-      "id" => "123456-12345678-34567",
+      "id" => $uuid4,
       "items" => []
     ];
+    $this->redis->set($uuid4, $bol);
+    
     return $this->json($bol, 201);
   }
 
