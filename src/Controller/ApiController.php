@@ -19,9 +19,9 @@ class ApiController extends Controller{
   }
 
   /**
-   * @Route("/bol", name="bol", methods={"GET"})
+   * @Route("/bol/{id}", name="bol", methods={"GET"})
    **/
-  public function bol(Request $request):Response{
+  public function bol(Request $request, $id):Response{
     $bol = [
       "id" => "123456-12345678-34567",
       "items" => []
