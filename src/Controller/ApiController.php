@@ -31,7 +31,7 @@ class ApiController extends Controller{
    * @Route("/bol/{uuid}", name="bol", methods={"GET"})
    **/
   public function bol(Request $request, $uuid):Response{
-    $bol = $this->redis->set($uuid);
+    $bol = json_decode($this->redis->get($uuid), true);
     return $this->json($bol, 200);
   }
 
@@ -44,62 +44,50 @@ class ApiController extends Controller{
       "id" => $uuid4,
       "items" => []
     ];
-    $this->redis->set($uuid4, $bol);
+    $this->redis->set($uuid4, json_encode($bol));
     
     return $this->json($bol, 201);
   }
 
   /**
-   * @Route("/bol", name="bol_additem", methods={"PUT"})
+   * @Route("/bol/{uuid}", name="bol_additem", methods={"PUT"})
    **/
-  public function addItem(Request $request):Response{
+  public function addItem(Request $request, $uuid):Response{
     $item = $request->getContent();
-    var_dump($item);
-    $bol = [
-      "id" => "123456-12345678-34567",
-      "items" => []
-    ];
+    $bol = json_decode($this->redis->get($uuid), true);
 
     $bol["items"][] = $item;
+    $this->redis->set($uuid4, json_encode($bol));
     return $this->json($bol, 201);
   }
 
   /**
-   * @Route("/bol", name="bol_clear", methods={"DELETE"})
+   * @Route("/bol/{uuid}", name="bol_clear", methods={"DELETE"})
    **/
-  public function clear(Request $request):Response{
-    $bol = [
-      "id" => "123456-12345678-34567",
-      "items" => ["pizza", "pâtes"]
-    ];
-
+  public function clear(Request $request, $uuid):Response{
+    $bol = json_decode($this->redis->get($uuid), true);
     $bol["items"] = [];
+    $this->redis->set($uuid4, json_encode($bol));
     return $this->json($bol, 201);
   }
 
   /**
-   * @Route("/bol/shake", name="bol_shake", methods={"GET"})
+   * @Route("/bol/{uuid}/shake", name="bol_shake", methods={"GET"})
    **/
-  public function shake(Request $request):Response{
-    $bol = [
-      "id" => "123456-12345678-34567",
-      "items" => ["pizza", "pâtes"]
-    ];
-
+  public function shake(Request $request, $uuid):Response{
+    $bol = json_decode($this->redis->get($uuid), true);
     shuffle($bol["items"]);
+    $this->redis->set($uuid4, json_encode($bol));
     return $this->json($bol, 200);
   }
 
   /**
-   * @Route("/bol/draw", name="bol_draw", methods={"GET"})
+   * @Route("/bol/{uuid}/draw", name="bol_draw", methods={"GET"})
    **/
-  public function draw(Request $request):Response{
-    $bol = [
-      "id" => "123456-12345678-34567",
-      "items" => ["pizza", "pâtes"]
-    ];
-
+  public function draw(Request $request, $uuid):Response{
+    $bol = json_decode($this->redis->get($uuid), true);
     $item = array_pop($bol["items"]);
+    $this->redis->set($uuid4, json_encode($bol));
     return $this->json($item, 201);
   }
 
