@@ -23,30 +23,30 @@ class ApiController extends Controller{
    **/
   public function bol(Request $request):Response{
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => []
     ];
     return $this->json($bol, 200);
   }
 
   /**
-   * @Route("/bol", name="bol", methods={"POST"})
+   * @Route("/bol", name="bol_create", methods={"POST"})
    **/
   public function create(Request $request):Response{
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => []
     ];
     return $this->json($bol, 201);
   }
 
   /**
-   * @Route("/bol", name="bol", methods={"PUT"})
+   * @Route("/bol", name="bol_additem", methods={"PUT"})
    **/
   public function addItem(Request $request):Response{
     $item = $request->request->get("item");
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => []
     ];
 
@@ -55,11 +55,11 @@ class ApiController extends Controller{
   }
 
   /**
-   * @Route("/bol", name="bol", methods={"DELETE"})
+   * @Route("/bol", name="bol_clear", methods={"DELETE"})
    **/
   public function clear(Request $request):Response{
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => ["pizza", "pâtes"]
     ];
 
@@ -68,11 +68,11 @@ class ApiController extends Controller{
   }
 
   /**
-   * @Route("/bol/shake", name="bol", methods={"GET"})
+   * @Route("/bol/shake", name="bol_shake", methods={"GET"})
    **/
   public function shake(Request $request):Response{
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => ["pizza", "pâtes"]
     ];
 
@@ -81,11 +81,11 @@ class ApiController extends Controller{
   }
 
   /**
-   * @Route("/bol/draw", name="bol", methods={"GET"})
+   * @Route("/bol/draw", name="bol_draw", methods={"GET"})
    **/
   public function draw(Request $request):Response{
     $bol = [
-      "id" => "123456-12345678-34567";
+      "id" => "123456-12345678-34567",
       "items" => ["pizza", "pâtes"]
     ];
 
