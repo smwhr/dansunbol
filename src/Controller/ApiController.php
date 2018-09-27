@@ -44,7 +44,8 @@ class ApiController extends Controller{
    * @Route("/bol", name="bol_additem", methods={"PUT"})
    **/
   public function addItem(Request $request):Response{
-    $item = $request->request->get("item");
+    $item = $request->getContent();
+    var_dump($item);
     $bol = [
       "id" => "123456-12345678-34567",
       "items" => []
